@@ -1,0 +1,40 @@
+'use client';
+
+import { useGlobalData } from '../../src/context/GlobalDataContext';
+import CareerHero from '../../src/components/careers/CareerHero';
+import JobList from '../../src/components/careers/JobList';
+import JobFilters from '../../src/components/careers/JobFilters';
+import { useState } from 'react';
+import { Navbar } from '../../src/components/navbar';
+import Footer from '../../src/components/footer';
+
+export default function CareersPage() {
+  const context = useGlobalData();
+  const jobs = context?.jobs || [];
+  const loading = false; 
+
+  const [search, setSearch] = useState('');
+
+  if (loading) return <div className="p-10 text-center text-linq-dark">Loading careers...</div>;
+
+  const filteredJobs = jobs?.filter((job) =>
+    job.title.toLowerCase().includes(search.toLowerCase()) ||
+    job.description?.toLowerCase().includes(search.toLowerCase()) ||
+    job.location?.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="bg-linq-white min-vh-100 d-flex flex-column">
+      <Navbar />
+      <main className="flex-grow-1">
+        <CareerHero />
+
+        <div className="container pb-5" style={{ marginTop: '-40px' }}>
+          <JobFilters search={search} setSearch={setSearch} />
+          <JobList jobs={filteredJobs} />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
