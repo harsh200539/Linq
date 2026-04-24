@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block branding %}
+<h1 id="site-name">
+    <img src="{% static 'admin/img/logo-light.webp' %}" alt="LINQ" style="height: 30px; vertical-align: middle; margin-right: 10px; filter: invert(1);">
+    LINQ Admin Portal
+</h1>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}">
+{% endblock %}
